@@ -1,0 +1,25 @@
+[package]
+name = "rustweb"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rocket = { version = "0.5.1", features = ["secrets", "tls", "json"], default-features = false }
+dotenvy = { version = "0.15", default-features = false }
+serde = { version = "1.0.228", features = ["derive"], default-features = false }
+envy = { version = "0.4.2", default-features = false }
+jsonwebtoken = { version = "10.3.0", features = ["aws_lc_rs", "use_pem"], default-features = false }
+chrono = { version = "0.4.44", features = ["serde"] }
+rcgen = { version = "0.14.7", features = ["aws_lc_rs"] }
+sqlx = { version = "0.8", features = [ "runtime-tokio", "tls-rustls-aws-lc-rs", "postgres", "uuid", "chrono" ] }
+uuid = { version = "1", features = ["v4", "serde"] }
+argon2 = { version = "0.6.0-rc.8", features = ["getrandom"] }
+validator = { version = "0.20.0", features = ["derive"] }
+
+# https://github.com/johnthagen/min-sized-rust
+[profile.release]
+strip = true
+opt-level = "z" # "s" can result in a smaller size, use 3 for all optimizations, otherwise "z" is fine
+lto = true
+codegen-units = 1
+panic = "abort" # No more backtraces at a panic

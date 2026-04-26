@@ -1,0 +1,7 @@
+[default]
+address = "0.0.0.0"
+secret_key = "mjKkUZBJr1+WzAO++nx6sF3pZhge2oefyNQZ6/Jluqo="
+
+[default.tls]
+certs = "cert/cert.pem"
+key = "cert/key.pem"

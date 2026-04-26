@@ -1,0 +1,24 @@
+services:
+  postgres:
+    container_name: Olytech-Database
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - path: .env
+        required: true
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DOMAIN: ${POSTGRES_DOMAIN}
+    volumes:
+      - ./Olytech_data:/var/lib/postgresql
+    networks:
+      - olytech_net
+
+volumes:
+  olytech_data:
+
+networks:
+  olytech_net:
