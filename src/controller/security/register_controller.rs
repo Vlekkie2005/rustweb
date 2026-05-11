@@ -1,10 +1,9 @@
 use rocket::http::{CookieJar, Status};
 use rocket::State;
-use rocket::serde::json::Json;
+use rocket::serde::json::{serde_json, Json};
 use validator::Validate;
-use sqlx::types::JsonValue::Null;
-use crate::models::user::{CreateUser};
-use crate::repositories::UserRepository;
+use crate::models::postgres::user::{CreateUser};
+use crate::repositories::Repositories;
 use crate::services::response_service::{ApiResponse, ResponseService};
 use crate::services::security::tokens::JwtService;
 use crate::services::security::user_auth::password_service::PasswordService;
@@ -12,7 +11,7 @@ use crate::services::security::user_auth::password_service::PasswordService;
 
 #[rocket::post("/register", data = "<body>")]
 pub async fn register(
-    repo: &State<UserRepository>,
+    repos: &State<Repositories>,
     jwt_svc: &State<JwtService>,
     jar: &CookieJar<'_>,
     body: Json<CreateUser>,
@@ -28,15 +27,15 @@ pub async fn register(
 
     let new_user = CreateUser {
         username: body.username.clone(),
-        email: body.email.clone(),
+        email: body.email.to_lowercase(),
         password: hashed_password,
     };
 
-    match repo.create(&new_user).await {
+    match repos.user.create(&new_user).await {
         Ok(user) => {
             let cookie = jwt_svc.create(user.id);
             jar.add_private(cookie);
-            ResponseService::success(Null, 201)
+            ResponseService::success(serde_json::json!({ "username": user.username, "id": user.id }), 201)
         },
         Err(e) => match e {
             sqlx::Error::Database(db_err) if db_err.code().as_deref() == Some("23505") => {

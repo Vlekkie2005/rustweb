@@ -1,3 +1,8 @@
+#dirs
 /target
+/Postgres_data
+/Redis_data
+/.idea
+
+#files
 /.env
-/Olytech_data

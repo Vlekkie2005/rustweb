@@ -1,4 +1,4 @@
-use chrono::{NaiveDateTime};
+use chrono::{DateTime, Utc};
 use rocket::serde::{Deserialize, Serialize};
 use uuid::Uuid;
 use validator::Validate;
@@ -6,7 +6,7 @@ use validator::Validate;
 #[derive(Debug, Serialize, sqlx::FromRow)]
 pub struct User {
     pub id: Uuid,
-    pub created_at: Option<NaiveDateTime>,
+    pub created_at: Option<DateTime<Utc>>,
     pub username: String,
     pub email: String,
     pub password: String,

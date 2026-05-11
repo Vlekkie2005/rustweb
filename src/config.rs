@@ -5,6 +5,7 @@ use sqlx::PgPool;
 pub struct AppConfig {
     pub jwt_exp: u64,
     pub database_url: String,
+    pub redis_url: String,
 }
 
 impl AppConfig {

@@ -9,7 +9,7 @@ use uuid::Uuid;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
-    pub sub: String,
+    pub sub: Uuid,
     pub iat: usize,
     pub exp: usize,
 }
@@ -43,7 +43,7 @@ impl JwtService {
         let exp_timestamp = (now + Duration::seconds(self.config.jwt_exp as i64)).timestamp();
 
         let claims = Claims {
-            sub: user_id.to_string().to_owned(),
+            sub: user_id,
             iat,
             exp: exp_timestamp as usize,
         };
