@@ -1,0 +1,51 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, name, type AS \"type!: ChannelType\", created_at\n               FROM channel WHERE id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "type!: ChannelType",
+        "type_info": {
+          "Custom": {
+            "name": "channel_type",
+            "kind": {
+              "Enum": [
+                "dm",
+                "group",
+                "server_channel"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "a22648cfb94023c65481103f4197290868ca341dec137bd8c891330946851dd1"
+}

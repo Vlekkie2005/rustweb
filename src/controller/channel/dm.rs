@@ -34,19 +34,19 @@ pub async fn get_or_create_dm(
     ResponseService::success(json!(channel), 200)
 }
 
-#[rocket::get("/dms/<target_id>")]
+#[rocket::get("/dms/<channel_id>")]
 pub async fn get_dm_info(
     user: AuthenticatedUser,
-    target_id: UserId,
+    channel_id: UserId,
     repos: &State<Repositories>,
 ) -> (Status, Json<ApiResponse>) {
-    match repos.participant.is_member(*target_id, *user).await {
+    match repos.participant.is_member(*channel_id, *user).await {
         Ok(true) => {}
         Ok(false) => return ResponseService::error("User is not a member", None, 401),
         Err(_) => return ResponseService::error("Database error", None, 500),
     }
 
-    let dm = match repos.channel.find_dm_by_id(*user, *target_id).await {
+    let dm = match repos.channel.find_dm_by_id(*user, *channel_id).await {
         Ok(Some(existing)) => existing,
         Ok(None) => return ResponseService::error("Unable to find channel", None, 404),
         Err(_) => return ResponseService::error("Database error", None, 500),

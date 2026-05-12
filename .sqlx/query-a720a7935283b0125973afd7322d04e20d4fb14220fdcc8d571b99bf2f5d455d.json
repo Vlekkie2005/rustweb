@@ -1,0 +1,64 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO friend (user_one_id, user_two_id, requested_by, status)\n               VALUES ($1, $2, $3, 'pending'::friend_status)\n               RETURNING\n                   user_one_id,\n                   user_two_id,\n                   requested_by,\n                   status AS \"status!: FriendStatus\",\n                   created_at,\n                   updated_at",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "user_one_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "user_two_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "requested_by",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "status!: FriendStatus",
+        "type_info": {
+          "Custom": {
+            "name": "friend_status",
+            "kind": {
+              "Enum": [
+                "pending",
+                "accepted"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "a720a7935283b0125973afd7322d04e20d4fb14220fdcc8d571b99bf2f5d455d"
+}

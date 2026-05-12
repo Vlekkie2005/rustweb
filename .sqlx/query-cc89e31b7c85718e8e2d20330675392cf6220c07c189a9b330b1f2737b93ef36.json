@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO participant (channel_id, user_id, is_admin)\n            VALUES ($1, $2, false), ($1, $3, false)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "cc89e31b7c85718e8e2d20330675392cf6220c07c189a9b330b1f2737b93ef36"
+}

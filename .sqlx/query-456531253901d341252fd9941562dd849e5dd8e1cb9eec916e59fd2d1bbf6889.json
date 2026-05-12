@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE participant SET last_read_at = now()\n             WHERE channel_id = $1 AND user_id = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "456531253901d341252fd9941562dd849e5dd8e1cb9eec916e59fd2d1bbf6889"
+}

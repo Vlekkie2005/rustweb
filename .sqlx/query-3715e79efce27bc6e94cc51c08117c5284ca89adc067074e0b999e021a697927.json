@@ -1,0 +1,68 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT\n                f.user_one_id, f.user_two_id, f.requested_by,\n                f.status AS \"status!: FriendStatus\",\n                f.created_at, f.updated_at,\n                u.username AS friend_name\n                FROM friend f\n                JOIN users u ON u.id = CASE\n                    WHEN f.user_one_id = $1 THEN f.user_two_id\n                    ELSE f.user_one_id\n                END\n                WHERE f.requested_by = $1\n                AND f.status = 'pending'::friend_status",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "user_one_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "user_two_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "requested_by",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "status!: FriendStatus",
+        "type_info": {
+          "Custom": {
+            "name": "friend_status",
+            "kind": {
+              "Enum": [
+                "pending",
+                "accepted"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 6,
+        "name": "friend_name",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "3715e79efce27bc6e94cc51c08117c5284ca89adc067074e0b999e021a697927"
+}

@@ -1,0 +1,51 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO channel (id, name, type)\n            VALUES (gen_random_uuid(), $1, 'dm')\n            RETURNING id, created_at, name, type AS \"type: ChannelType\"",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "type: ChannelType",
+        "type_info": {
+          "Custom": {
+            "name": "channel_type",
+            "kind": {
+              "Enum": [
+                "dm",
+                "group",
+                "server_channel"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "4f32cb0a3453c1f7ef813fc9820e5a012eea31e9b531c9016bc9199409a5cc9f"
+}

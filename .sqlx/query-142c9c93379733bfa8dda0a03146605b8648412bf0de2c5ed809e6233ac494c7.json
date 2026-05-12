@@ -1,0 +1,63 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE friend\n               SET status = 'accepted'::friend_status, updated_at = NOW()\n               WHERE user_one_id = $1\n                 AND user_two_id = $2\n                 AND status = 'pending'::friend_status\n               RETURNING\n                   user_one_id,\n                   user_two_id,\n                   requested_by,\n                   status AS \"status!: FriendStatus\",\n                   created_at,\n                   updated_at",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "user_one_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "user_two_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "requested_by",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "status!: FriendStatus",
+        "type_info": {
+          "Custom": {
+            "name": "friend_status",
+            "kind": {
+              "Enum": [
+                "pending",
+                "accepted"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "142c9c93379733bfa8dda0a03146605b8648412bf0de2c5ed809e6233ac494c7"
+}
