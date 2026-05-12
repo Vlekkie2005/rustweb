@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: Postgres-Database
-    image: postgres:latest
+    image: postgres:18.3-alpine #make sure to use postgres 18+ for native uuidV7 support
     ports:
       - "5432:5432"
     env_file:

@@ -17,11 +17,15 @@ impl AppConfig {
     }
 
     pub async fn load_pgpool(&self) -> PgPool {
-        sqlx::postgres::PgPoolOptions::new()
-            .max_connections(10)
+        let pool = sqlx::postgres::PgPoolOptions::new()
+            .max_connections(30)
             .acquire_timeout(std::time::Duration::from_secs(5))
             .connect(&self.database_url)
             .await
-            .expect("Failed to connect to database")
+            .expect("Failed to connect to database");
+
+        sqlx::migrate!().run(&pool).await.expect("Migration failed");
+
+        pool
     }
 }

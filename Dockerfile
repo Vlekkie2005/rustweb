@@ -18,6 +18,7 @@ RUN rm -rf src
 # Build the app
 COPY src ./src
 COPY .sqlx ./.sqlx
+COPY migrations ./migrations
 ENV SQLX_OFFLINE=true
 RUN touch src/main.rs && cargo build --release
 
@@ -28,6 +29,7 @@ FROM debian:stable-slim AS runtime
 WORKDIR /app
 
 COPY --from=builder /app/target/release/rustweb ./server
+COPY migrations ./migrations
 
 EXPOSE 8000
 
